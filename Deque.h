@@ -131,7 +131,7 @@ class my_deque {
     private:
         // -----
         // valid
-        // -----
+        // ----- 
 
         bool valid () const {
             // <your code>
