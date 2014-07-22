@@ -103,9 +103,12 @@ class my_deque {
          * <your documentation>
          */
         friend bool operator == (const my_deque& lhs, const my_deque& rhs) {
-            // <your code>
+            //our code
             // you must use std::equal()
-            return true;}
+            if(lhs.size() != rhs.size())
+                return false;
+            return std::equal(lhs._b, lhs._e, rhs._b);
+        }
 
         // ----------
         // operator <
@@ -115,9 +118,10 @@ class my_deque {
          * <your documentation>
          */
         friend bool operator < (const my_deque& lhs, const my_deque& rhs) {
-            // <your code>
+            // our code
             // you must use std::lexicographical_compare()
-            return true;}
+            return std::lexicographical_compare(lhs._b, lhs._e, rhs._b, rhs._e);
+        }
 
     private:
         // ----
@@ -126,7 +130,10 @@ class my_deque {
 
         allocator_type _a;
 
-        // <your data>
+        //our code
+        pointer _b; // front of deque
+        pointer _e; // size
+        pointer _l; // capacity
 
     private:
         // -----
@@ -134,8 +141,9 @@ class my_deque {
         // ----- 
 
         bool valid () const {
-            // <your code>
-            return true;}
+            // our code - taken from Prof. Downings Vector.h example
+            return(!_b && !_e && !_l) || ((_b <= _e) && (_e <= _l));
+        }
 
     public:
         // --------
@@ -163,8 +171,8 @@ class my_deque {
                  * <your documentation>
                  */
                 friend bool operator == (const iterator& lhs, const iterator& rhs) {
-                    // <your code>
-                    return true;}
+                    return &lhs == &rhs;
+                }
 
                 /**
                  * <your documentation>
@@ -256,7 +264,7 @@ class my_deque {
                  * <your documentation>
                  */
                 iterator& operator ++ () {
-                    // <your code>
+                    ++(*this);
                     assert(valid());
                     return *this;}
 
@@ -277,7 +285,7 @@ class my_deque {
                  * <your documentation>
                  */
                 iterator& operator -- () {
-                    // <your code>
+                    --(*this);
                     assert(valid());
                     return *this;}
 
@@ -298,7 +306,7 @@ class my_deque {
                  * <your documentation>
                  */
                 iterator& operator += (difference_type d) {
-                    // <your code>
+                    *this = *this + d;
                     assert(valid());
                     return *this;}
 
@@ -705,7 +713,8 @@ class my_deque {
          * <your documentation>
          */
         void pop_back () {
-            // <your code>
+            assert(!empty());
+            resize(size() - 1);
             assert(valid());}
 
         /**
@@ -722,15 +731,15 @@ class my_deque {
         /**
          * <your documentation>
          */
-        void push_back (const_reference) {
-            // <your code>
+        void push_back (const_reference v) {
+            resize(size() + 1);
             assert(valid());}
 
         /**
          * <your documentation>
          */
-        void push_front (const_reference) {
-            // <your code>
+        void push_front (const_reference v) {
+            _b-- = v;
             assert(valid());}
 
         // ------
@@ -741,7 +750,8 @@ class my_deque {
          * <your documentation>
          */
         void resize (size_type s, const_reference v = value_type()) {
-            // <your code>
+            if(v == NULL && s > size());
+                //what to do for push_front
             assert(valid());}
 
         // ----
@@ -752,8 +762,8 @@ class my_deque {
          * <your documentation>
          */
         size_type size () const {
-            // <your code>
-            return 0;}
+            return _e - _b;
+        }
 
         // ----
         // swap
