@@ -100,11 +100,37 @@ TYPED_TEST(TestDeque, Size) {
     const size_type s = x.size();
     ASSERT_EQ(0, s);}
 
-// TYPED_TEST(TestDeque, Size_2){
-//     typedef typename TestFixture::deque_type      deque_type;
-//     typedef typename TestFixture::size_type       size_type;
+TYPED_TEST(TestDeque, Size_2){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(10,3);
+    const size_type s = x.size();
+    ASSERT_EQ(10, s); 
+    ASSERT_EQ(3,  x[0]);
+}
+
+
+TYPED_TEST(TestDeque, constructor_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
     
-//     deque_type x(10);
-//     const size_type s = x.size();
-//     ASSERT_EQ(10, s); 
-// }
+    deque_type x(10);
+    const size_type s = x.size();
+    ASSERT_EQ(10, s); 
+}
+
+TYPED_TEST(TestDeque, copy_constructor){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(10, 2);
+    deque_type y(x);
+    const size_type x_s = x.size();
+    const size_type y_s = y.size();
+
+    ASSERT_EQ(x_s, 10);
+    ASSERT_EQ(y_s, 10);
+    ASSERT_EQ(x_s, y_s);
+    ASSERT_TRUE(x[0] == y[0]);
+}

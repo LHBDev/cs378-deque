@@ -94,6 +94,9 @@ class my_deque {
         typedef typename allocator_type::reference       reference;
         typedef typename allocator_type::const_reference const_reference;
 
+        typedef typename allocator_type::template rebind<T*>::other p_a_t;
+        typedef typename p_a_t::pointer p_p;
+
     public:
         // -----------
         // operator ==
@@ -129,8 +132,9 @@ class my_deque {
         // ----
 
         allocator_type _a;
+        p_a_t _pa;
 
-        pointer bucket[];
+        p_p bucket;
         pointer _b; // front of deque
         pointer _e; // size
 
@@ -509,32 +513,47 @@ class my_deque {
          * <your documentation>
          */
          //default size
-        explicit my_deque (const allocator_type& a = allocator_type()) :
-                _a (a) {
-            *bucket = _a.allocate(DEFAULT_BUCKET_SIZE);
+        explicit my_deque (const allocator_type& a = allocator_type()) :_pa() {
+            _a = a;
+            // _pa();
+
+            bucket = _pa.allocate(DEFAULT_BUCKET_SIZE);
+
             for(int i = 0; i < 3; ++i)
                 bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
             _b = &bucket[1][5];
             _e = &bucket[1][5];
+
             assert(valid());}
 
         /**
          * <your documentation>
          */
          // given size
-        explicit my_deque (size_type s, const_reference v = value_type(), const allocator_type& a = allocator_type()) :
-                _a (a) {
-            // pointer bucket2[3];
-            // bucket = bucket2;
-            // pointer bucket_copy = bucket;
+        explicit my_deque (size_type s, const_reference v = value_type(), const allocator_type& a = allocator_type()){
+            _a = a;
+            size_type array_size = s / 10;
+            size_type copy_size = s;
+            size_type internal_size; // keep track of the size of the internal array, for initialization
+            if(s % 10 != 0)
+                ++array_size;
 
-            // for(; bucket_copy < bucket + DEFAULT_BUCKET_SIZE; ++bucket_copy)
-            //     bucket_copy = _a.allocate(DEFAULT_ARRAY_SIZE);
-            // _b = bucket[1][5];
-            // _e = bucket[2][9];
-            
-            
-            // uninitialized_fill(_a, begin(), end(), v);
+            bucket = _pa.allocate(array_size);
+            for(size_type i = 0; i < array_size; ++i){
+                bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
+
+                if(copy_size >= 10)
+                {
+                    internal_size = 10;
+                    copy_size -= 10;
+                }
+                else
+                    internal_size = copy_size;
+
+                uninitialized_fill(_a, bucket[i], (bucket[i] + internal_size), v);
+            }
+            _b = &bucket[0][0];
+            _e = _b + s;
 
             assert(valid());}
 
@@ -542,8 +561,32 @@ class my_deque {
          * <your documentation>
          */
          //copy constructor
-        my_deque (const my_deque& that) {
-            // <your code>
+        my_deque (const my_deque& that) 
+            : _a(that._a), _pa(that._pa){
+ 
+            size_type s = that._e - that._b;
+            size_type array_size = s/10;
+            size_type copy_size = s;
+            size_type internal_size;
+            if(s % 10 != 0)
+                ++array_size;
+
+            bucket = _pa.allocate(array_size);
+            for(size_type i = 0; i < array_size; ++i){
+                bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
+
+                if(copy_size >= 10)
+                {
+                    internal_size = 10;
+                    copy_size -= 10;
+                }
+                else
+                    internal_size = copy_size;
+            }
+            _b = &bucket[0][0];
+            _e = _b + s;
+
+            uninitialized_copy(_a, that._b, that._e, _b);
             assert(valid());}
 
         // ----------
@@ -577,10 +620,8 @@ class my_deque {
          * <your documentation>
          */
         reference operator [] (size_type index) {
-            // <your code>
-            // dummy is just to be able to compile the skeleton, remove it
-            static value_type dummy;
-            return dummy;}
+            reference x = *(_b+ index);
+            return x;}
 
         /**
          * <your documentation>
@@ -753,7 +794,7 @@ class my_deque {
          * <your documentation>
          */
         void push_back (const_reference v) {
-            resize(size() + 1,v);
+            resize(size() + 1,v); 
             assert(valid());}
 
         /**
