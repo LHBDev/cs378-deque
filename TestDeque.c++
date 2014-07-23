@@ -134,3 +134,11 @@ TYPED_TEST(TestDeque, copy_constructor){
     ASSERT_EQ(x_s, y_s);
     ASSERT_TRUE(x[0] == y[0]);
 }
+
+TYPED_TEST(TestDeque, destructor){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(10, 2);
+        
+}

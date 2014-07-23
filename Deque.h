@@ -597,7 +597,7 @@ class my_deque {
          * <your documentation>
          */
         ~my_deque () {
-            // <your code>
+            
             assert(valid());}
 
         // ----------

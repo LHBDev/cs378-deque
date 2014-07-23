@@ -1,0 +1,6 @@
+*.gcda
+*.gcno
+*.txt
+test
+test.*
+TestDeque
