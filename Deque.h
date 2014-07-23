@@ -17,6 +17,7 @@
 #include <memory>    // allocator
 #include <stdexcept> // out_of_range
 #include <utility>   // !=, <=, >, >=
+#include <cmath>
 
 // -----
 // using
@@ -135,8 +136,12 @@ class my_deque {
         p_a_t _pa;
 
         p_p bucket;
+        pointer _front_capacity; // capacity behind begin
+        pointer _back_capacity;  // capacity ahead of end
         pointer _b; // front of deque
         pointer _e; // size
+
+        size_type _bucket_size;
 
         const size_type DEFAULT_ARRAY_SIZE = 10;
         const size_type DEFAULT_BUCKET_SIZE = 3;
@@ -523,6 +528,11 @@ class my_deque {
                 bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
             _b = &bucket[1][5];
             _e = &bucket[1][5];
+            _front_capacity = &bucket[0][0];
+            _back_capacity = &bucket[DEFAULT_BUCKET_SIZE -1][DEFAULT_ARRAY_SIZE ];
+
+
+            _bucket_size = DEFAULT_BUCKET_SIZE;
 
             assert(valid());}
 
@@ -532,6 +542,7 @@ class my_deque {
          // given size
         explicit my_deque (size_type s, const_reference v = value_type(), const allocator_type& a = allocator_type()){
             _a = a;
+            int middle = (s > 10)? 5 : ceil(s/2);
             size_type array_size = s / 10;
             size_type copy_size = s;
             size_type internal_size; // keep track of the size of the internal array, for initialization
@@ -552,8 +563,12 @@ class my_deque {
 
                 uninitialized_fill(_a, bucket[i], (bucket[i] + internal_size), v);
             }
-            _b = &bucket[0][0];
+            _b = &bucket[(int)ceil(array_size/2)][middle];
             _e = _b + s;
+            _front_capacity = &bucket[0][0];
+            _back_capacity = &bucket[array_size -1][DEFAULT_ARRAY_SIZE ];
+
+            _bucket_size = array_size; 
 
             assert(valid());}
 
@@ -564,6 +579,8 @@ class my_deque {
         my_deque (const my_deque& that) 
             : _a(that._a), _pa(that._pa){
  
+            using namespace std;
+
             size_type s = that._e - that._b;
             size_type array_size = s/10;
             size_type copy_size = s;
@@ -572,9 +589,10 @@ class my_deque {
                 ++array_size;
 
             bucket = _pa.allocate(array_size);
+            cout<<"1: " << endl;
             for(size_type i = 0; i < array_size; ++i){
                 bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
-
+                cout<<"2: " << endl;
                 if(copy_size >= 10)
                 {
                     internal_size = 10;
@@ -583,10 +601,20 @@ class my_deque {
                 else
                     internal_size = copy_size;
             }
-            _b = &bucket[0][0];
-            _e = _b + s;
+            cout << "3: " << endl;
+            _front_capacity =  &bucket[0][0];
+            _back_capacity = &bucket[array_size - 1][DEFAULT_ARRAY_SIZE];
 
+            size_type difference_b = that._b - that._front_capacity;
+            size_type difference_e = that._back_capacity - that._e;
+            _b = _front_capacity + difference_b;
+            _e = _b + s;
+            
+
+            _bucket_size = that._bucket_size;
+            cout << "4: "<<endl;
             uninitialized_copy(_a, that._b, that._e, _b);
+            cout<<"5: " <<endl;
             assert(valid());}
 
         // ----------
@@ -597,6 +625,11 @@ class my_deque {
          * <your documentation>
          */
         ~my_deque () {
+            if(_b != _e)
+                clear();
+            // for(int i = 0; i < (int)bucket.size(); ++i)
+            //     _a.deallocate(bucket[i], DEFAULT_ARRAY_SIZE);
+            // _pa.deallocate(bucket, bucket.size());
             
             assert(valid());}
 
@@ -693,7 +726,7 @@ class my_deque {
          * <your documentation>
          */
         void clear () {
-            // <your code>
+            resize(0);
             assert(valid());}
 
         // -----
@@ -812,8 +845,20 @@ class my_deque {
          * <your documentation>
          */
         void resize (size_type s, const_reference v = value_type()) {
-            if(v == NULL && s > size());
-                //what to do for push_front
+            // if(s == size())
+            //     return;
+            // else if(s < size()){                                    // less than size
+            //     _e = destroy(_a, _b + s, _e);
+            // }else if(s <= bucket.size() * DEFAULT_ARRAY_SIZE){      // less than capacity, greater than size
+            //     s = s - size();
+            //     size_type front = s/2;
+            //     size_type back = s - front;
+            //     uninitialized_fill(_a, _b - front, _b, v);
+            //     _e = uninitialized_fill(_a, _e, _e + back, v);
+            // }
+            // else{                                                   // greather than size & capacity
+
+            // }
             assert(valid());}
 
         // ----
