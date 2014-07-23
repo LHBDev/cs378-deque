@@ -130,10 +130,12 @@ class my_deque {
 
         allocator_type _a;
 
-        //our code
+        pointer bucket[];
         pointer _b; // front of deque
         pointer _e; // size
-        pointer _l; // capacity
+
+        const size_type DEFAULT_ARRAY_SIZE = 10;
+        const size_type DEFAULT_BUCKET_SIZE = 3;
 
     private:
         // -----
@@ -142,7 +144,7 @@ class my_deque {
 
         bool valid () const {
             // our code - taken from Prof. Downings Vector.h example
-            return(!_b && !_e && !_l) || ((_b <= _e) && (_e <= _l));
+            return(!_b && !_e) || ((_b <= _e));
         }
 
     public:
@@ -204,7 +206,6 @@ class my_deque {
                 // ----
                 // data
                 // ----
-
                 // <your data>
 
             private:
@@ -507,20 +508,40 @@ class my_deque {
         /**
          * <your documentation>
          */
-        explicit my_deque (const allocator_type& a = allocator_type()) {
-            // <your code>
+         //default size
+        explicit my_deque (const allocator_type& a = allocator_type()) :
+                _a (a) {
+            *bucket = _a.allocate(DEFAULT_BUCKET_SIZE);
+            for(int i = 0; i < 3; ++i)
+                bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
+            _b = &bucket[1][5];
+            _e = &bucket[1][5];
             assert(valid());}
 
         /**
          * <your documentation>
          */
-        explicit my_deque (size_type s, const_reference v = value_type(), const allocator_type& a = allocator_type()) {
-            // <your code>
+         // given size
+        explicit my_deque (size_type s, const_reference v = value_type(), const allocator_type& a = allocator_type()) :
+                _a (a) {
+            // pointer bucket2[3];
+            // bucket = bucket2;
+            // pointer bucket_copy = bucket;
+
+            // for(; bucket_copy < bucket + DEFAULT_BUCKET_SIZE; ++bucket_copy)
+            //     bucket_copy = _a.allocate(DEFAULT_ARRAY_SIZE);
+            // _b = bucket[1][5];
+            // _e = bucket[2][9];
+            
+            
+            // uninitialized_fill(_a, begin(), end(), v);
+
             assert(valid());}
 
         /**
          * <your documentation>
          */
+         //copy constructor
         my_deque (const my_deque& that) {
             // <your code>
             assert(valid());}
@@ -732,7 +753,7 @@ class my_deque {
          * <your documentation>
          */
         void push_back (const_reference v) {
-            resize(size() + 1);
+            resize(size() + 1,v);
             assert(valid());}
 
         /**
