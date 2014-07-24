@@ -135,3 +135,32 @@ TYPED_TEST(TestDeque, copy_constructor){
     ASSERT_TRUE(x[0] == y[0]);
 }
 
+TYPED_TEST(TestDeque, push_back){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x;
+    x.push_back(0);
+    x.push_back(1);
+    x.push_back(2);
+    x.push_back(3);
+    x.push_back(4);
+    x.push_back(5);
+    x.push_back(6);
+    x.push_back(7);
+    x.push_back(8);
+    x.push_back(9);
+    ASSERT_EQ(x.size(), 10);
+    // ASSERT_EQ(x[0], 0);
+    // ASSERT_EQ(x[1], 1);
+    // ASSERT_EQ(x[2], 2);
+    // ASSERT_EQ(x[3], 3);
+    // ASSERT_EQ(x[4], 4);
+    // ASSERT_EQ(x[5], 5);
+    // ASSERT_EQ(x[6], 6);
+    // ASSERT_EQ(x[7], 7);
+    // ASSERT_EQ(x[8], 8);
+    // ASSERT_EQ(x[9], 9);
+       
+}
+
