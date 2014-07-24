@@ -569,8 +569,9 @@ class my_deque {
                 _a.deallocate(_fr[i], WIDTH);
             }
             _pa.deallocate(_fr, num_arrays);
-            _front = _begin = _a.allocate(s);
-            _end = _back = _begin + s;
+            _front = _begin = _a.allocate(num_arrays * WIDTH);
+            _back = _front + (num_arrays * WIDTH);
+            _end = _begin + s;
             uninitialized_fill(_a, _front, _end, v);
 
             assert(valid());}
@@ -611,11 +612,7 @@ class my_deque {
          * <your documentation>
          */
         ~my_deque () {
-            // if(_b != _e)
-            //     clear();
-            // for(size_type i = 0; i < _bucket_size ; ++i)
-            //     _a.deallocate(bucket[i], DEFAULT_ARRAY_SIZE);
-            // _pa.deallocate(bucket, _bucket_size);
+            
             
             assert(valid());}
 
@@ -814,7 +811,13 @@ class my_deque {
          * <your documentation>
          */
         void push_back (const_reference v) {
-            resize(size() + 1,v); 
+            if(_end == _back){
+                
+
+            }
+            if(_end != _back){
+                _end = uninitialized_fill(_a, _end, _end + 1, v);
+            }
             assert(valid());}
 
         /**
