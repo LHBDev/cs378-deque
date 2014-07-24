@@ -135,32 +135,263 @@ TYPED_TEST(TestDeque, copy_constructor){
     ASSERT_TRUE(x[0] == y[0]);
 }
 
-TYPED_TEST(TestDeque, push_back){
+
+// TYPED_TEST(TestDeque, push_back){
+//     typedef typename TestFixture::deque_type      deque_type;
+//     typedef typename TestFixture::size_type       size_type;
+
+//     deque_type x;
+//     x.push_back(0);
+//     x.push_back(1);
+//     x.push_back(2);
+//     x.push_back(3);
+//     x.push_back(4);
+//     x.push_back(5);
+//     x.push_back(6);
+//     x.push_back(7);
+//     x.push_back(8);
+//     x.push_back(9);
+//     ASSERT_EQ(x.size(), 10);
+//     ASSERT_EQ(x[0], 0);
+//     ASSERT_EQ(x[1], 1);
+//     ASSERT_EQ(x[2], 2);
+//     ASSERT_EQ(x[3], 3);
+//     ASSERT_EQ(x[4], 4);
+//     ASSERT_EQ(x[5], 5);
+//     ASSERT_EQ(x[6], 6);
+//     ASSERT_EQ(x[7], 7);
+//     ASSERT_EQ(x[8], 8);
+//     ASSERT_EQ(x[9], 9);
+       
+// }
+
+
+
+TYPED_TEST(TestDeque, begin_1){
     typedef typename TestFixture::deque_type      deque_type;
     typedef typename TestFixture::size_type       size_type;
 
-    deque_type x;
-    x.push_back(0);
-    x.push_back(1);
-    x.push_back(2);
-    x.push_back(3);
-    x.push_back(4);
-    x.push_back(5);
-    x.push_back(6);
-    x.push_back(7);
-    x.push_back(8);
-    x.push_back(9);
-    ASSERT_EQ(x.size(), 10);
-    ASSERT_EQ(x[0], 0);
-    ASSERT_EQ(x[1], 1);
-    ASSERT_EQ(x[2], 2);
-    ASSERT_EQ(x[3], 3);
-    ASSERT_EQ(x[4], 4);
-    ASSERT_EQ(x[5], 5);
-    ASSERT_EQ(x[6], 6);
-    ASSERT_EQ(x[7], 7);
-    ASSERT_EQ(x[8], 8);
-    ASSERT_EQ(x[9], 9);
-       
+  
+
+
+    deque_type x(10, 2);
+
+    x[0] =0;
+    x[1] =1;
+
+    x[5] = 5;
+    x[8] = 8;
+    x[9] = 9;
+    cout << x[9]  << endl;
+
+
+
+    ASSERT_TRUE(x[0] == 0);
+
+    ASSERT_TRUE(x[1] == 1);
+
+    ASSERT_TRUE(x[5] == 5);
+
+
+    ASSERT_TRUE(x[9] == 9);
+
+
+
+
+    // my_deque<int>::iterator temp;
+
+    // cout << *temp << endl;
+    auto it = x.begin();
+    ASSERT_EQ(0, *it);
+    auto itend = x.end();
+    --itend;
+    ASSERT_EQ(9, *itend );
+    --itend;
+    ASSERT_EQ(8, *itend );
+
+ 
 }
 
+TYPED_TEST(TestDeque, end_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    deque_type x(10, 2);
+
+    x[0] =0;
+    x[1] =1;
+
+    x[5] = 5;
+    x[8] = 8;
+    x[9] = 9;
+    // cout << x[9]  << endl;
+    ASSERT_TRUE(x[0] == 0);
+    ASSERT_TRUE(x[1] == 1);
+    ASSERT_TRUE(x[5] == 5);
+    ASSERT_TRUE(x[9] == 9);
+    auto itend = x.end();
+    --itend;
+    ASSERT_EQ(9, *itend );
+    --itend;
+    ASSERT_EQ(8, *itend );
+}
+
+
+TYPED_TEST(TestDeque, iterator_minus_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    deque_type x(10, 2);
+
+    x[0] =0;
+    x[1] =1;
+
+    x[5] = 5;
+    x[8] = 8;
+    x[9] = 9;
+    // cout << x[9]  << endl;
+    ASSERT_TRUE(x[0] == 0);
+    ASSERT_TRUE(x[1] == 1);
+    ASSERT_TRUE(x[5] == 5);
+    ASSERT_TRUE(x[9] == 9);
+    auto itend = x.end();
+    --itend;
+    ASSERT_EQ(9, *itend );
+    --itend;
+    ASSERT_EQ(8, *itend );
+}
+
+TYPED_TEST(TestDeque, iterator_pre_plus_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    deque_type x(10, 2);
+
+    x[0] =0;
+    x[1] =1;
+    ASSERT_TRUE(x[0] == 0);
+    ASSERT_TRUE(x[1] == 1);
+    auto itend = x.begin();
+    ++itend;
+    ASSERT_EQ(1, *itend );
+    ++itend;
+    ASSERT_EQ(2, *itend );
+}
+
+TYPED_TEST(TestDeque, iterator_post_plus_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    deque_type x(10, 2);
+
+    x[0] =0;
+    x[1] =1;
+    ASSERT_TRUE(x[0] == 0);
+    ASSERT_TRUE(x[1] == 1);
+    auto itend = x.begin();
+    itend++;
+    ASSERT_EQ(1, *itend );
+    itend++;
+    ASSERT_EQ(2, *itend );
+}
+
+
+TYPED_TEST(TestDeque, iterator_plus_equal_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    deque_type x(10, 2);
+
+    x[0] =0;
+    x[1] =1;
+    x[3] = 3;
+    ASSERT_TRUE(x[0] == 0);
+    ASSERT_TRUE(x[1] == 1);
+    ASSERT_TRUE(x[3] == 3);
+    auto itend = x.begin();
+    itend+=2;
+    ASSERT_EQ(2, *itend );
+    itend--;
+    ASSERT_EQ(1, *itend );
+
+    itend+=2;
+    ASSERT_EQ(3, *itend );
+}
+
+TYPED_TEST(TestDeque, iterator_minus_equal_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    deque_type x(10, 2);
+
+    x[8] = 8;
+    x[9] = 9;
+
+    x[6] =6;
+
+    ASSERT_TRUE(x[8] == 8);
+    ASSERT_TRUE(x[9] == 9);
+    auto itend = x.end();
+    itend-=2;
+    ASSERT_EQ(8, *itend );
+
+    itend-=2;
+    ASSERT_EQ(6, *itend );
+}
+
+
+TYPED_TEST(TestDeque, const_begin_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    const deque_type x(10, 2);
+    // x[0] =0;
+    // x[1] =1;
+    // x[5] = 5;
+    // x[8] = 8;
+    // x[9] = 9;
+    cout << x[9]  << endl;
+    ASSERT_TRUE(x[0] == 2);
+    ASSERT_TRUE(x[1] == 2);
+
+
+    auto it = x.begin();
+    ASSERT_EQ(2, *it);
+    //  auto itend = x.end();
+    // --itend;
+    // ASSERT_EQ(9, *itend );
+    // --itend;
+    // ASSERT_EQ(8, *itend );
+
+}
+
+TYPED_TEST(TestDeque, const_pre_minus_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    const deque_type x(10, 2);
+
+    // cout << x[9]  << endl;
+
+
+    auto it = x.end();
+    --it;
+    ASSERT_EQ(2, *it);
+    //  auto itend = x.end();
+    // --itend;
+    // ASSERT_EQ(9, *itend );
+    // --itend;
+    // ASSERT_EQ(8, *itend );
+
+}
+
+TYPED_TEST(TestDeque, const_end_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    const deque_type x(10, 2);
+    // cout << x[9]  << endl;
+
+
+
+    auto it = x.end();
+    --it;
+    ASSERT_EQ(2, *it);
+    //  auto itend = x.end();
+    // --itend;
+    // ASSERT_EQ(9, *itend );
+    // --itend;
+    // ASSERT_EQ(8, *itend );
+
+}

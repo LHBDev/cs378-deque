@@ -228,7 +228,7 @@ class my_deque {
                 // ----
                 // <your data>
 
-                my_deque _c;
+                my_deque* _c;
                 size_type index;
 
             private:
@@ -237,8 +237,7 @@ class my_deque {
                 // -----
 
                 bool valid () const {
-                    // <your code>
-                    return true;}
+                    return index >= 0;}
 
             public:
                 // -----------
@@ -248,7 +247,10 @@ class my_deque {
                 /**
                  * <your documentation>
                  */
-                iterator (my_deque c, size_type i = 0) : _c(c), index(i){
+                iterator (my_deque* c, size_type i = 0) : _c(c), index(0){
+
+                    index = i;
+
                     assert(valid());
                 }
 
@@ -265,9 +267,7 @@ class my_deque {
                  * <your documentation>
                  */
                 reference operator * () const {
-                    // <your code>
-                    // dumsmy is just to be able to compile the skeleton, remove it
-                    return _c[index];}
+                    return (*_c)[index];}
 
                 // -----------
                 // operator ->
@@ -287,7 +287,8 @@ class my_deque {
                  * <your documentation>
                  */
                 iterator& operator ++ () {
-                    ++(*this);
+                    // ++(*this);
+                    ++index;
                     assert(valid());
                     return *this;}
 
@@ -308,7 +309,8 @@ class my_deque {
                  * <your documentation>
                  */
                 iterator& operator -- () {
-                    --(*this);
+                    // --(*this);
+                    --index;
                     assert(valid());
                     return *this;}
 
@@ -329,7 +331,8 @@ class my_deque {
                  * <your documentation>
                  */
                 iterator& operator += (difference_type d) {
-                    *this = *this + d;
+                    index += d;
+                    // *this = *this + d;
                     assert(valid());
                     return *this;}
 
@@ -341,7 +344,7 @@ class my_deque {
                  * <your documentation>
                  */
                 iterator& operator -= (difference_type d) {
-                    // <your code>
+                    index -= d;
                     assert(valid());
                     return *this;}};
 
@@ -371,8 +374,7 @@ class my_deque {
                  * <your documentation>
                  */
                 friend bool operator == (const const_iterator& lhs, const const_iterator& rhs) {
-                    // <your code>
-                    return true;}
+                    return lhs._c == rhs._c && lhs.index == rhs.index;}
 
                 /**
                  * <your documentation>
@@ -407,7 +409,7 @@ class my_deque {
 
                 // <your data>
 
-                my_deque _c;
+                const my_deque* _c;
                 size_type index;
 
             private:
@@ -417,7 +419,7 @@ class my_deque {
 
                 bool valid () const {
                     // <your code>
-                    return true;}
+                    return index >= 0;}
 
             public:
                 // -----------
@@ -427,7 +429,9 @@ class my_deque {
                 /**
                  * <your documentation>
                  */
-                const_iterator  (my_deque c, size_type i = 0) : _c(c), index(i){
+                const_iterator  (const my_deque* c, size_type i = 0) : _c(c), index(0){
+
+                    index = i;
                     // <your code>
                     assert(valid());}
 
@@ -444,10 +448,8 @@ class my_deque {
                  * <your documentation>
                  */
                 reference operator * () const {
-                    // <your code>
-                    // dummy is just to be able to compile the skeleton, remove it
                    
-                    return _c[index];}
+                    return (*_c)[index];}
 
                 // -----------
                 // operator ->
@@ -488,7 +490,7 @@ class my_deque {
                  * <your documentation>
                  */
                 const_iterator& operator -- () {
-                    // <your code>
+                    --index;
                     assert(valid());
                     return *this;}
 
@@ -508,8 +510,8 @@ class my_deque {
                 /**
                  * <your documentation>
                  */
-                const_iterator& operator += (difference_type) {
-                    // <your code>
+                const_iterator& operator += (difference_type d) {
+                    index += d;
                     assert(valid());
                     return *this;}
 
@@ -520,8 +522,8 @@ class my_deque {
                 /**
                  * <your documentation>
                  */
-                const_iterator& operator -= (difference_type) {
-                    // <your code>
+                const_iterator& operator -= (difference_type d) {
+                    index -= d
                     assert(valid());
                     return *this;}};
 
@@ -692,15 +694,15 @@ class my_deque {
          * <your documentation>
          */
         iterator begin () {
-            // <your code>
-            return _begin;}
+
+            return iterator(this, 0);}
 
         /**
          * <your documentation>
          */
         const_iterator begin () const {
-            // <your code>
-            return const_iterator(*this, 0);}
+                    cout << "YOU CALLED THE CONSTANT ONE!!!  YEAH!!!"<< endl;
+            return const_iterator(this, 0);}
 
         // -----
         // clear
@@ -732,14 +734,15 @@ class my_deque {
          */
         iterator end () {
             // <your code>
-            return _end;}
+            return iterator(this, size());}
 
         /**
          * <your documentation>
          */
         const_iterator end () const {
+         cout << "YOU CALLED THE CONSTANT END !!!  YEAH!!!"<< endl;
 
-         return const_iterator(*this, size());}
+         return const_iterator(this, size() );}
 
         // -----
         // erase
