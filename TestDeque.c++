@@ -312,7 +312,6 @@ TYPED_TEST(TestDeque, iterator_post_plus_2){
     auto e = x.end();
     int i =0;
     while(b != e){
-        cout << *b<< " " << i << endl;
         ASSERT_TRUE(*b == i);
         ++b;
         ++i;
@@ -431,4 +430,28 @@ TYPED_TEST(TestDeque, const_iterator_plus_equal_1){
 
     // itend+=2;
     // ASSERT_EQ(3, *itend );
+}
+
+TYPED_TEST(TestDeque, push_back){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(15, 0);
+    deque_type y(15, 0);
+    x.push_back(1);
+    y.push_back(1);
+    x.push_back(2);
+    y.push_back(2);   
+    x.push_back(3);
+    y.push_back(3);   
+    x.push_back(4);
+    y.push_back(4);   
+    x.push_back(5);
+    y.push_back(5); 
+
+    typename deque_type::iterator it = x.begin();
+    typename deque_type::iterator e = x.end();
+    typename deque_type::iterator b = y.begin();
+    while(it != e)
+        ASSERT_EQ(*it++, *b++);
 }
