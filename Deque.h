@@ -418,7 +418,6 @@ class my_deque {
                 // -----
 
                 bool valid () const {
-                    // <your code>
                     return index >= 0;}
 
             public:
@@ -432,7 +431,6 @@ class my_deque {
                 const_iterator  (const my_deque* c, size_type i = 0) : _c(c), index(0){
 
                     index = i;
-                    // <your code>
                     assert(valid());}
 
                 // Default copy, destructor, and copy assignment.
@@ -469,7 +467,7 @@ class my_deque {
                  * <your documentation>
                  */
                 const_iterator& operator ++ () {
-                    // <your code>
+                    ++index;
                     assert(valid());
                     return *this;}
 
@@ -511,6 +509,8 @@ class my_deque {
                  * <your documentation>
                  */
                 const_iterator& operator += (difference_type d) {
+            // cout << "YOU CALLED THE CONSTANT ONE!!!  YEAH!!!"<< endl;
+
                     index += d;
                     assert(valid());
                     return *this;}
@@ -701,7 +701,7 @@ class my_deque {
          * <your documentation>
          */
         const_iterator begin () const {
-                    cout << "YOU CALLED THE CONSTANT ONE!!!  YEAH!!!"<< endl;
+                    // cout << "YOU CALLED THE CONSTANT ONE!!!  YEAH!!!"<< endl;
             return const_iterator(this, 0);}
 
         // -----
@@ -740,7 +740,7 @@ class my_deque {
          * <your documentation>
          */
         const_iterator end () const {
-         cout << "YOU CALLED THE CONSTANT END !!!  YEAH!!!"<< endl;
+         // cout << "YOU CALLED THE CONSTANT END !!!  YEAH!!!"<< endl;
 
          return const_iterator(this, size() );}
 
