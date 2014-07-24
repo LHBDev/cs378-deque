@@ -127,24 +127,30 @@ class my_deque {
             return std::lexicographical_compare(lhs._b, lhs._e, rhs._b, rhs._e);
         }
 
+
+
+
     private:
         // ----
         // data
         // ----
 
-        allocator_type _a;
-        p_a_t _pa;
+        allocator_type _a;  // T allocator
+        p_a_t _pa; // T* allocator
 
-        p_p bucket;
-        pointer _front_capacity; // capacity behind begin
-        pointer _back_capacity;  // capacity ahead of end
-        pointer _b; // front of deque
-        pointer _e; // size
+        p_p _fr;    // front of outer array
+        p_p _ba;    // back of outer array
+        pointer _b;     // beginning of inner array
+        pointer _e;     // end of inner array
 
-        size_type _bucket_size;
+        pointer _front;     // front of allocated space
+        pointer _begin;     // beginning of used space
+        pointer _end;       // end of used space
+        pointer _back;      // back of allocated space
 
-        const size_type DEFAULT_ARRAY_SIZE = 10;
-        const size_type DEFAULT_BUCKET_SIZE = 3;
+       
+
+        const size_type WIDTH = 10;
 
     private:
         // -----
@@ -158,27 +164,27 @@ class my_deque {
 
 
         my_deque(const my_deque& that, size_type s): _a(that._a), _pa(that._pa){
-            size_type array_size = s / DEFAULT_ARRAY_SIZE;
-            size_type copy_size = s;
-            size_type internal_size;
-            if(s % 10 != 0)
-                ++array_size;
-            bucket = _pa.allocate(array_size);
-            for(size_type i = 0; i < array_size; ++i){
-                bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
+            // size_type array_size = s / DEFAULT_ARRAY_SIZE;
+            // size_type copy_size = s;
+            // size_type internal_size;
+            // if(s % 10 != 0)
+            //     ++array_size;
+            // bucket = _pa.allocate(array_size);
+            // for(size_type i = 0; i < array_size; ++i){
+            //     bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
 
-                if(copy_size >= 10){
-                    internal_size = 10;
-                    copy_size -= 10;
-                }
-                else
-                    internal_size = copy_size;
-            }
+            //     if(copy_size >= 10){
+            //         internal_size = 10;
+            //         copy_size -= 10;
+            //     }
+            //     else
+            //         internal_size = copy_size;
+            // }
 
-            _b = _front_capacity = &bucket[0][0];
-            _back_capacity = &bucket[array_size-1][DEFAULT_ARRAY_SIZE];
-            _e = uninitialized_copy(_a, that._b, that._e, _b);
-            _bucket_size = array_size;
+            // _b = _front_capacity = &bucket[0][0];
+            // _back_capacity = &bucket[array_size-1][DEFAULT_ARRAY_SIZE];
+            // _e = uninitialized_copy(_a, that._b, that._e, _b);
+            // _bucket_size = array_size;
         }
 
     public:
@@ -242,6 +248,9 @@ class my_deque {
                 // ----
                 // <your data>
 
+                my_deque _c;
+                size_type index;
+
             private:
                 // -----
                 // valid
@@ -259,9 +268,9 @@ class my_deque {
                 /**
                  * <your documentation>
                  */
-                iterator (/* <your arguments> */) {
-                    // <your code>
-                    assert(valid());}
+                iterator (my_deque c, size_type i = 0) : _c(c), index(i){
+                    assert(valid());
+                }
 
                 // Default copy, destructor, and copy assignment.
                 // iterator (const iterator&);
@@ -277,9 +286,8 @@ class my_deque {
                  */
                 reference operator * () const {
                     // <your code>
-                    // dummy is just to be able to compile the skeleton, remove it
-                    static value_type dummy;
-                    return dummy;}
+                    // dumsmy is just to be able to compile the skeleton, remove it
+                    return _c[index];}
 
                 // -----------
                 // operator ->
@@ -419,6 +427,9 @@ class my_deque {
 
                 // <your data>
 
+                my_deque _c;
+                size_type index;
+
             private:
                 // -----
                 // valid
@@ -436,7 +447,7 @@ class my_deque {
                 /**
                  * <your documentation>
                  */
-                const_iterator (/* <your arguments> */) {
+                const_iterator  (my_deque c, size_type i = 0) : _c(c), index(i){
                     // <your code>
                     assert(valid());}
 
@@ -455,8 +466,8 @@ class my_deque {
                 reference operator * () const {
                     // <your code>
                     // dummy is just to be able to compile the skeleton, remove it
-                    static value_type dummy;
-                    return dummy;}
+                   
+                    return _c[index];}
 
                 // -----------
                 // operator ->
@@ -543,23 +554,10 @@ class my_deque {
          * <your documentation>
          */
          //default size
-        explicit my_deque (const allocator_type& a = allocator_type()) :_a(a),_pa() {
-            // _a = a;
-            // _pa();
+        explicit my_deque (const allocator_type& a = allocator_type())
+        : _a(a), _pa(), _fr(0), _ba(0), _b(0), _e(0), _front(0), _begin(0), _end(0), _back(0){
 
-            bucket = _pa.allocate(DEFAULT_BUCKET_SIZE);
-
-            for(int i = 0; i < 3; ++i)
-                bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
-            _b = &bucket[1][5];
-            _e = &bucket[1][5];
-            _front_capacity = &bucket[0][0];
-            _back_capacity = &bucket[DEFAULT_BUCKET_SIZE -1][DEFAULT_ARRAY_SIZE ];
-
-
-            _bucket_size = DEFAULT_BUCKET_SIZE;
-
-            assert(valid());}
+        assert(valid() );}
 
         /**
          * <your documentation>
@@ -567,33 +565,31 @@ class my_deque {
          // given size
         explicit my_deque (size_type s, const_reference v = value_type(), const allocator_type& a = allocator_type())
         :_a(a), _pa(){
-            // _a = a;
-            // int middle = (s > 10)? 5 : ceil(s/2);
-            size_type array_size = s / 10;
-            size_type copy_size = s;
-            size_type internal_size; // keep track of the size of the internal array, for initialization
-            if(s % 10 != 0)
-                ++array_size;
-            array_size *= 2;
-            bucket = _pa.allocate(array_size);
-            for(size_type i = 0; i < array_size; ++i){
-                bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
-
-                if(copy_size >= 10)
-                {
-                    internal_size = 10;
-                    copy_size -= 10;
-                }
-                else
-                    internal_size = copy_size;
+                // we need s / WIDTH full arrays, and possibly 1 partial array
+            size_type num_arrays = s / WIDTH + (s % WIDTH? 1 : 0);
+            // allocate outer array and save pointer to front
+            _fr = _pa.allocate(num_arrays);
+            // allocate inner arrays
+            for (size_type i = 0; i < num_arrays; ++i) {
+                _fr[i] = _a.allocate(WIDTH);
             }
-            _b = &bucket[0][0];
-            _e = _b + s;
-            uninitialized_fill(_a, _b, _e, v);          
-            _front_capacity = &bucket[0][0];
-            _back_capacity = &bucket[array_size -1][DEFAULT_ARRAY_SIZE ];
-
-            _bucket_size = array_size; 
+            // set pointer to back
+            _ba = _fr + num_arrays;
+            // set pointer to beginning of data
+            _b = _fr[0];
+            // offset < WIDTH if we have a partial array
+            size_type offset = WIDTH - (WIDTH * num_arrays - s); 
+            assert  (0 < offset and offset <= WIDTH);
+            // set pointer to end of data
+            _e = _fr[num_arrays - 1] + offset;
+            // fill inner arrays with default value
+            for (size_type i = 0; i < num_arrays; ++i) {
+                _a.deallocate(_fr[i], WIDTH);
+            }
+            _pa.deallocate(_fr, num_arrays);
+            _front = _begin = _a.allocate(s);
+            _end = _back = _begin + s;
+            uninitialized_fill(_a, _front, _end, v);
 
             assert(valid());}
 
@@ -602,33 +598,41 @@ class my_deque {
          */
          //copy constructor
         my_deque (const my_deque& that) 
-            : _a(that._a), _pa(that._pa){
+            : _a(that._a), _pa(that._pa),  _fr(0), _ba(0), _b(0), _e(0), _front(0), _begin(0), _end(0), _back(0){
+
+
+            
+            _fr = _ba = 0;
+            _b = _e;
+            _front = _begin = _a.allocate(that.size());
+            _end = _back = _begin + that.size();
+            uninitialized_copy(_a, that._begin, that._end, _begin);
  
-            using namespace std;
+            // using namespace std;
 
-            size_type s = that.size();
-            size_type array_size = s / DEFAULT_ARRAY_SIZE;
-            size_type copy_size = s;
-            size_type internal_size;
-            if(s % 10 != 0)
-                ++array_size;
-            bucket = _pa.allocate(array_size);
-            for(size_type i = 0; i < array_size; ++i){
-                bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
+            // size_type s = that.size();
+            // size_type array_size = s / DEFAULT_ARRAY_SIZE;
+            // size_type copy_size = s;
+            // size_type internal_size;
+            // if(s % 10 != 0)
+            //     ++array_size;
+            // bucket = _pa.allocate(array_size);
+            // for(size_type i = 0; i < array_size; ++i){
+            //     bucket[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
 
-                if(copy_size >= 10)
-                {
-                    internal_size = 10;
-                    copy_size -= 10;
-                }
-                else
-                    internal_size = copy_size;
-            }
+            //     if(copy_size >= 10)
+            //     {
+            //         internal_size = 10;
+            //         copy_size -= 10;
+            //     }
+            //     else
+            //         internal_size = copy_size;
+            // }
 
-            _b = _front_capacity = &bucket[0][0];
-            _back_capacity = &bucket[array_size-1][DEFAULT_ARRAY_SIZE];
-            _e = uninitialized_copy(_a, that._b, that._e , _b);
-            _bucket_size = array_size;
+            // _b = _front_capacity = &bucket[0][0];
+            // _back_capacity = &bucket[array_size-1][DEFAULT_ARRAY_SIZE];
+            // _e = uninitialized_copy(_a, that._b, that._e , _b);
+            // _bucket_size = array_size;
         }
 
         // ----------
@@ -639,11 +643,11 @@ class my_deque {
          * <your documentation>
          */
         ~my_deque () {
-            if(_b != _e)
-                clear();
-            for(size_type i = 0; i < _bucket_size ; ++i)
-                _a.deallocate(bucket[i], DEFAULT_ARRAY_SIZE);
-            _pa.deallocate(bucket, _bucket_size);
+            // if(_b != _e)
+            //     clear();
+            // for(size_type i = 0; i < _bucket_size ; ++i)
+            //     _a.deallocate(bucket[i], DEFAULT_ARRAY_SIZE);
+            // _pa.deallocate(bucket, _bucket_size);
             
             assert(valid());}
 
@@ -667,7 +671,7 @@ class my_deque {
          * <your documentation>
          */
         reference operator [] (size_type index) {
-            reference x = *(_b+ index);
+            reference x = *(_begin+ index);
             return x;}
 
         /**
@@ -723,14 +727,14 @@ class my_deque {
          */
         iterator begin () {
             // <your code>
-            return iterator(/* <your arguments> */);}
+            return _begin;}
 
         /**
          * <your documentation>
          */
         const_iterator begin () const {
             // <your code>
-            return const_iterator(/* <your arguments> */);}
+            return const_iterator(*this, 0);}
 
         // -----
         // clear
@@ -762,14 +766,14 @@ class my_deque {
          */
         iterator end () {
             // <your code>
-            return iterator(/* <your arguments> */);}
+            return _end;}
 
         /**
          * <your documentation>
          */
         const_iterator end () const {
-            // <your code>
-            return const_iterator(/* <your arguments> */);}
+
+         return const_iterator(*this, size());}
 
         // -----
         // erase
@@ -848,7 +852,7 @@ class my_deque {
          * <your documentation>
          */
         void push_front (const_reference v) {
-            _b-- = v;
+            // _b-- = v;
             assert(valid());}
 
         // ------
@@ -859,17 +863,17 @@ class my_deque {
          * <your documentation>
          */
         void resize (size_type s, const_reference v = value_type()) {
-            if(s == size())
-                return;
-            else if(s < size()){                                    // less than size
-                _e = destroy(_a, _b + s, _e);
-            }else if(s <= (size_type)(_back_capacity - _front_capacity)){      // less than capacity, greater than size
-                _e = uninitialized_fill(_a, _e, _e + (s - size()), v);
-            }
-            else{                                                   // greather than size & capacity
-                my_deque x(*this, s);
-                swap(x);
-            }
+            // if(s == size())
+            //     return;
+            // else if(s < size()){                                    // less than size
+            //     _e = destroy(_a, _b + s, _e);
+            // }else if(s <= (size_type)(_back_capacity - _front_capacity)){      // less than capacity, greater than size
+            //     _e = uninitialized_fill(_a, _e, _e + (s - size()), v);
+            // }
+            // else{                                                   // greather than size & capacity
+            //     my_deque x(*this, s);
+            //     swap(x);
+            // }
             assert(valid());}
 
         // ----
@@ -880,7 +884,7 @@ class my_deque {
          * <your documentation>
          */
         size_type size () const {
-            return _e - _b;
+            return _end - _begin;
         }
 
         // ----
@@ -891,14 +895,16 @@ class my_deque {
          * <your documentation>
          */
         void swap (my_deque& that) {
-            if(_a == that._a){
-                std::swap(_b, that._b);
-                std::swap(_e, that._e);
-            }else{
+
+            if (_a == that._a) {
+                std::swap(_front, that._front);
+                std::swap(_begin, that._begin);
+                std::swap(_end, that._end);
+                std::swap(_back, that._back);}
+            else {
                 my_deque x(*this);
                 *this = that;
-                that = x;
-            }
+                that = x;}
             assert(valid());}};
 
 #endif // Deque_h
