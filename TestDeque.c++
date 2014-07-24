@@ -48,6 +48,8 @@ To obtain coverage of the test:
 
 #include "Deque.h"
 
+    using namespace std;
+
 // ---------
 // TestDeque
 // ---------
@@ -124,15 +126,20 @@ TYPED_TEST(TestDeque, copy_constructor){
     typedef typename TestFixture::deque_type      deque_type;
     typedef typename TestFixture::size_type       size_type;
 
-    deque_type x(10, 2);
+    deque_type x(20, 2);
     deque_type y(x);
     const size_type x_s = x.size();
     const size_type y_s = y.size();
 
-    ASSERT_EQ(x_s, 10);
-    ASSERT_EQ(y_s, 10);
+    ASSERT_EQ(x_s, 20);
+    ASSERT_EQ(y_s, 20);
     ASSERT_EQ(x_s, y_s);
     ASSERT_TRUE(x[0] == y[0]);
+
+
+    x[19] = 19;
+
+    ASSERT_EQ(19, x[19]);
 }
 
 
@@ -289,6 +296,29 @@ TYPED_TEST(TestDeque, iterator_post_plus_1){
     ASSERT_EQ(1, *itend );
     itend++;
     ASSERT_EQ(2, *itend );
+}
+
+
+
+TYPED_TEST(TestDeque, iterator_post_plus_2){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+    deque_type x(100, 2);
+
+    for (int i =0; i < 100; ++i){
+        x[i] = i;
+    }
+    auto b = x.begin();
+    auto e = x.end();
+    int i =0;
+    while(b != e){
+        cout << *b<< " " << i << endl;
+        ASSERT_TRUE(*b == i);
+        ++b;
+        ++i;
+    }
+    
+
 }
 
 

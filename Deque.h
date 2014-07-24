@@ -162,7 +162,7 @@ class my_deque {
 
         bool valid () const {
             // our code - taken from Prof. Downings Vector.h example
-            return(!_b && !_e) || ((_b <= _e));
+            return(!_begin && !_end) || ((_begin <= _end));
         }
 
 
@@ -193,7 +193,7 @@ class my_deque {
                  * <your documentation>
                  */
                 friend bool operator == (const iterator& lhs, const iterator& rhs) {
-                    return &lhs == &rhs;
+                    return lhs._c == rhs._c && lhs.index == rhs.index;
                 }
 
                 /**
@@ -835,9 +835,9 @@ class my_deque {
             if(s == size())
                 return;
             else if(s < size()){                                    // less than size
-                _e = destroy(_a, _begin + s, _end);
+                _end = destroy(_a, _begin + s, _end);
             }else if(s <= (size_type)(_back - _front)){      // less than capacity, greater than size
-                _e = uninitialized_fill(_a, _end, _end + (s - size()), v);
+                _end = uninitialized_fill(_a, _end, _end + (s - size()), v);
             }
             else{   
                cout << "AQUI ENTRO" << endl;                                             // greather than size & capacity
