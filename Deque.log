@@ -1,0 +1,236 @@
+commit 5da5999fc18dfef202193b93bc0a604736a6fd76
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Fri Jul 25 16:41:25 2014 -0500
+
+    finished tests and added them to class repo. Fixed #4. Fixed #5.
+
+commit 26377ee098044300871763bcbe264a73fb1ff785
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Fri Jul 25 16:38:56 2014 -0500
+
+    added tests for rb27735 and nel349
+
+commit 00de7b980671d32141ed0c6422dd3716d9763021
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Fri Jul 25 16:16:30 2014 -0500
+
+    Fixed warnings
+
+commit e7bb71ca956ad092f6de09d0642e19fe678cbf8e
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Fri Jul 25 16:12:03 2014 -0500
+
+    a
+    dded more test
+
+commit 8a43d0aa223daa60fe52c471e301832ac3599beb
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Fri Jul 25 15:57:48 2014 -0500
+
+     Added Doxygen files and removed spaces in source. Fixed #9.
+
+commit 6c57f56503aa257bd122f2f80d7224bd429a7de8
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Fri Jul 25 15:36:31 2014 -0500
+
+    All documentation completed. Resize is fixed and deallocates moved to destructor and swap only. Fixed #2. Fixed #6. Fixed #7. Fixed #8. Fixed #14. Fixed #15. Fixed #15. Fixed #16. Fixed #17. Fixed #18. Fixed #19. Fixed #21. Fixed #22. Fixed #23. Fixed #24. Fixed #25.
+
+commit d856a9799b52d6ba413c97056c494ffabad748ff
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Fri Jul 25 12:52:15 2014 -0500
+
+    Finished tests size - insert
+
+commit 2275feded6f54d51056c07798a7f7f7ae4fc7b42
+Merge: 698c970 c2ebdda
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Thu Jul 24 23:59:32 2014 -0500
+
+    merge
+
+commit 698c970388c2a3c97cacb0113fd00128c3260e30
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Thu Jul 24 23:56:39 2014 -0500
+
+    merge
+
+commit e11ae95c4c4b21e6b66e7ee880b3cebd1c80a1dc
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Thu Jul 24 23:39:05 2014 -0500
+
+    erase#18
+
+commit c2ebdda53c69a549bf81f39058a5c9ad9353cbfc
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Thu Jul 24 23:36:05 2014 -0500
+
+    Everything except copy assignment and erase
+
+commit 75a1f265902cb05168983ea939fceb0db6d7aa0c
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Thu Jul 24 21:26:24 2014 -0500
+
+    1 test for most functions
+
+commit 8c6f9d055cc353d1680dbe469c4a216586d505fc
+Merge: 3a34a4e 401f128
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Thu Jul 24 21:24:09 2014 -0500
+
+    merge
+
+commit 3a34a4ef1fa0f23c20e06fd7569e280ffc320528
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Thu Jul 24 20:29:36 2014 -0500
+
+    working push_back
+
+commit 401f1285131f9cc17ee485feb1240eb76e547ecc
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Thu Jul 24 20:28:31 2014 -0500
+
+    almost everything#16#17#18
+
+commit f3940bfbe3c3d72348b9c640719400cc0635824d
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Thu Jul 24 17:41:44 2014 -0500
+
+    push_back tests
+
+commit 333ea676cd56c64dba5a1f17eb8e0423ceb0d8eb
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Thu Jul 24 17:32:56 2014 -0500
+
+    push_back, no resize, restored to master
+
+commit 3a839194c7cf082c8b189750466f86aa932e00e1
+Merge: a33c79b 14773e7
+Author: LHBDev <freeraprb@gmail.com>
+Date:   Thu Jul 24 17:30:42 2014 -0500
+
+    Merge pull request #20 from LHBDev/restore
+    
+    Restore
+
+commit 14773e7996f303bbaf0b02ab0ed21d9718b62fd1
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Thu Jul 24 17:26:04 2014 -0500
+
+    weird
+
+commit 73254aed44f44835d157df782112bfc7d71759d2
+Merge: 7a51b5c a33c79b
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Thu Jul 24 17:24:02 2014 -0500
+
+    Merge branch 'master' of https://github.com/LHBDev/cs378-deque into HEAD
+    
+    ????
+
+commit a33c79b52c13c474c2a29d92f9fe58a1f8e0ccd1
+Author: LHBDev <freeraprb@gmail.com>
+Date:   Thu Jul 24 17:23:51 2014 -0500
+
+    Create README.md
+
+commit 7a51b5c35ef7b48553c4774bdb776d2470051e4f
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Thu Jul 24 16:14:36 2014 -0500
+
+    Update iterator equal
+
+commit 87c74d9c42cdec9f203cff390ab18306495281a1
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Thu Jul 24 13:02:10 2014 -0500
+
+    Iterators and constIterators presumably done #15 #16 #17 #18
+
+commit 19d0c46a32733e512d328ba6bbad70f4930b9c6f
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Thu Jul 24 12:09:49 2014 -0500
+
+    fixed issues #14 #15
+
+commit fb27fb39e12d9f59fc64c3bfe84736113dfee7f4
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Wed Jul 23 22:30:36 2014 -0500
+
+    Need to work on resize, pushback, index
+
+commit d9b7eda4bf825b1f7c1a5d34fecde269a3e7e40a
+Author: Norman Lopez <nel349@cs.utexas.edu>
+Date:   Wed Jul 23 21:52:19 2014 -0500
+
+    new beginning
+
+commit 718f3bdd4ce852e2c6871b61e46555d940000b48
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Wed Jul 23 19:47:25 2014 -0500
+
+    swap
+
+commit 3f0c60068b48c983c653d1fba9c34575e51fa8ed
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Wed Jul 23 19:39:59 2014 -0500
+
+    semi working resize
+
+commit 254debb3d5b10500677a8acf642ba45ad67b623c
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Wed Jul 23 03:52:58 2014 -0500
+
+    final push of the night, copy constructor leaks
+
+commit c14b72c30bf21255d9d8fb01fede9befe80e9d17
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Wed Jul 23 02:37:42 2014 -0500
+
+    added gitignore
+
+commit 7a4f304af5583ddbbc241ce7ec931d410f7d90c6
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Wed Jul 23 02:36:09 2014 -0500
+
+    Constructors Updated and Copy_Constructor working
+
+commit d3783802f56a7d94480edbd5e801622d6b4cafdb
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Wed Jul 23 02:35:36 2014 -0500
+
+    Constructors Updated and Copy_constructor working
+
+commit e251a353d6be5542871e3d09accd1fe4509f809d
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Tue Jul 22 22:28:33 2014 -0500
+
+    changes
+
+commit c4e7f2cd6badb9f137eb236017679ce00929ff2b
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Tue Jul 22 22:28:01 2014 -0500
+
+    changes
+
+commit 40eef4b0fbddc27c6bfcefc5704a721d067d9c77
+Author: Ruben Baeza <rb27735@cs.utexas.edu>
+Date:   Tue Jul 22 22:25:48 2014 -0500
+
+    default constructor and outer array layout complete
+
+commit 908946a1465256e185c648e1b78e83a9331af06c
+Author: LHBDev <freeraprb@gmail.com>
+Date:   Tue Jul 22 01:58:50 2014 -0500
+
+    size(), pop_back(), push_back(), == and < for deque
+
+commit 4677b02d924efd89f78d926ce64757736fa27476
+Author: LHBDev <freeraprb@gmail.com>
+Date:   Tue Jul 22 01:27:23 2014 -0500
+
+    Resolved initial issues. Fixed #1. Fixed #3
+
+commit 9edc63862100fbfb9c229060ed66c0561568ffc4
+Author: LHBDev <freeraprb@gmail.com>
+Date:   Tue Jul 22 01:18:47 2014 -0500
+
+    initial commit
