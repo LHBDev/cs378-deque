@@ -984,7 +984,7 @@ class my_deque {
             if(_data_end == _inner_end){
                 if(_data_end == 0){
                     _bucket_begin = _pa.allocate(DEFAULT_BUCKET_SIZE);
-                    for(int i = 0; i < DEFAULT_BUCKET_SIZE; ++i)
+                    for(unsigned int i = 0; i < DEFAULT_BUCKET_SIZE; ++i)
                         _bucket_begin[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
 
                     _bucket_end = _bucket_begin + DEFAULT_BUCKET_SIZE;
@@ -1041,7 +1041,7 @@ class my_deque {
             if(_data_begin == _inner_begin){
                 if(_data_begin == 0){
                     _bucket_begin = _pa.allocate(DEFAULT_BUCKET_SIZE);
-                    for(int i = 0; i < DEFAULT_BUCKET_SIZE; ++i)
+                    for(unsigned int i = 0; i < DEFAULT_BUCKET_SIZE; ++i)
                         _bucket_begin[i] = _a.allocate(DEFAULT_ARRAY_SIZE);
 
                     _bucket_end = _bucket_begin + DEFAULT_BUCKET_SIZE;
