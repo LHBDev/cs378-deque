@@ -708,7 +708,7 @@ class my_deque {
             _inner_begin = _data_begin = _a.allocate(new_size);
             _data_end = _data_begin + new_size;
             _inner_end = _inner_begin + (rhs._inner_end - rhs._inner_begin);
-            uninitialized_copy(_a, rhs._data_begin, rhs._data_end, _data_begin);
+            _data_end = uninitialized_copy(_a, rhs._data_begin, rhs._data_end, _data_begin);
 
 
             assert(valid());
