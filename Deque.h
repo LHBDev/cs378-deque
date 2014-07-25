@@ -1025,7 +1025,7 @@ class my_deque {
                     _data_begin = _inner_begin;
                     _inner_end = _inner_begin + (new_size * num_arrays);
                     push_back(v);
-                }
+                } 
 
             }
             else if(_data_end != _inner_end){

@@ -1349,4 +1349,4 @@ TYPED_TEST(TestDeque, copy_assignment3){
 
     while(it != e)
         ASSERT_EQ(*it++, *b++);    
-}
+} 
