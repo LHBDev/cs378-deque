@@ -150,6 +150,7 @@ class my_deque {
         pointer _begin;     // beginning of used space
         pointer _end;       // end of used space
         pointer _back;      // back of allocated space
+        int b_idx;
 
        
 
@@ -538,6 +539,7 @@ class my_deque {
          //default size
         explicit my_deque (const allocator_type& a = allocator_type())
         : _a(a), _pa(), _fr(0), _ba(0), _b(0), _e(0), _front(0), _begin(0), _end(0), _back(0){
+            b_idx = 0;
 
         assert(valid() );}
 
@@ -565,14 +567,15 @@ class my_deque {
             // set pointer to end of data
             _e = _fr[num_arrays - 1] + offset;
             // fill inner arrays with default value
-            for (size_type i = 0; i < num_arrays; ++i) {
-                _a.deallocate(_fr[i], WIDTH);
-            }
-            _pa.deallocate(_fr, num_arrays);
+            // for (size_type i = 0; i < num_arrays; ++i) {
+            //     _a.deallocate(_fr[i], WIDTH);
+            // }
+            // _pa.deallocate(_fr, num_arrays);
             _front = _begin = _a.allocate(num_arrays * WIDTH);
             _back = _front + (num_arrays * WIDTH);
             _end = _begin + s;
             uninitialized_fill(_a, _front, _end, v);
+            b_idx = 0;
 
             assert(valid());}
 
@@ -584,11 +587,12 @@ class my_deque {
             : _a(that._a), _pa(that._pa),  _fr(0), _ba(0), _b(0), _e(0), _front(0), _begin(0), _end(0), _back(0){
 
 
-            
+            b_idx = 0;
             _fr = _ba = 0;
             _b = _e;
             _front = _begin = _a.allocate(that.size());
-            _end = _back = _begin + that.size();
+            _end = _begin + that.size();
+            _back = _front + (that._back - that._front);
             uninitialized_copy(_a, that._begin, that._end, _begin);
  
         }
@@ -807,15 +811,44 @@ class my_deque {
         // push
         // ----
 
+
+
         /**
          * <your documentation>
          */
         void push_back (const_reference v) {
+            using namespace std;
             if(_end == _back){
-                
+                size_type old_size = size();
+                size_type new_size = size() * 2;
+                size_type num_arrays = new_size / WIDTH + (new_size % WIDTH? 1 : 0);
+
+                p_p temp_fr(0);
+                p_p temp_ba(0);
+
+                temp_fr = _pa.allocate(num_arrays);
+
+                for(size_type i = 0; i < num_arrays; ++i){
+                    temp_fr[i] = _a.allocate(WIDTH);
+                }
+
+                temp_ba = temp_fr + num_arrays;
+
+                for(int i = 0; i < _ba - _fr; ++i){
+                    temp_fr[i] = _fr[i];
+                }
+
+                _fr = temp_fr;
+                _ba = temp_ba;
+                _front = _a.allocate(num_arrays * new_size);
+
+                _end = uninitialized_copy(_a, _begin, _end, _front);
+                _begin = _front;
+                _back = _front + (new_size * num_arrays);
+                push_back(v);
 
             }
-            if(_end != _back){
+            else if(_end != _back){
                 _end = uninitialized_fill(_a, _end, _end + 1, v);
             }
             assert(valid());}
@@ -835,18 +868,29 @@ class my_deque {
          * <your documentation>
          */
         void resize (size_type s, const_reference v = value_type()) {
-            if(s == size())
-                return;
-            else if(s < size()){                                    // less than size
-                _end = destroy(_a, _begin + s, _end);
-            }else if(s <= (size_type)(_back - _front)){      // less than capacity, greater than size
-                _end = uninitialized_fill(_a, _end, _end + (s - size()), v);
+            if(s < size())
+            {
+                pop_back();
+                resize(s, v);
             }
-            else{   
-               cout << "AQUI ENTRO" << endl;                                             // greather than size & capacity
-                my_deque x(*this, s);
-                swap(x);
+            else if(s > size())
+            {
+                push_back(v);
+                resize(s, v);
             }
+
+            // if(s == size())
+            //     return;
+            // else if(s < size()){                                    // less than size
+            //     _end = destroy(_a, _begin + s, _end);
+            // }else if(s <= (size_type)(_back - _front)){      // less than capacity, greater than size
+            //     _end = uninitialized_fill(_a, _end, _end + (s - size()), v);
+            // }
+            // else{   
+            //    cout << "AQUI ENTRO" << endl;                                             // greather than size & capacity
+            //     my_deque x(*this, s);
+            //     swap(x);
+            // }
             assert(valid());}
 
         // ----

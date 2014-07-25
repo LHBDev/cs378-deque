@@ -881,3 +881,46 @@ class my_deque {
             assert(valid());}};
 
 #endif // Deque_h
+
+
+
+
+
+size_type old_size = _ba - _fr;
+                size_type new_size = old_size * 2;
+                p_p temp_fr(0);
+                p_p temp_ba(0);
+                // int shifts = old_size / 2;
+
+                //allocate the new space and assign to temp variables
+                temp_fr = _pa.allocate(new_size);
+                temp_ba = temp_fr + new_size;
+
+                cout << "HERE1" << endl;
+                for(size_type i = 0; i < new_size; ++i)
+                    temp_fr[(int)i] = _a.allocate(WIDTH);
+
+                // cout << _fr[0] << endl;
+
+                cout << "HERE2" << endl;
+                //copy over all the old pointers to the temps
+                for(size_type i = 0; i < old_size; ++i){
+                   temp_fr[(int)i] = _fr[(int)i]; 
+                }
+
+                cout << "HERE3" << endl;
+                // _pa.deallocate(_fr, old_size);
+                _fr = temp_fr;
+                _ba = temp_ba;
+
+                cout << "HERE5" << endl;
+
+                _front = _fr[0];
+                _back = &_fr[(int)new_size - 1][WIDTH];
+
+                cout << "HERE4" << endl;
+                // _pa.deallocate(_fr, new_size);
+
+                std::cout<<"old size: " << old_size<<std::endl;
+                std::cout<<"new size: " << temp_ba - temp_fr <<std::endl;
+                _end = uninitialized_fill(_a, _end, _end + 1, v);
