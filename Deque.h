@@ -799,7 +799,7 @@ class my_deque {
            
            auto b = begin(); 
            auto e = end();
-           size_type size = distance(b,e);
+           size_type size = distance(b,e) + 1;
            size_type index_pos = distance(b , given_pos) ;
 
            my_deque x(size,0);
