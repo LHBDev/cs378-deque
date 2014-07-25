@@ -538,3 +538,40 @@ TYPED_TEST(TestDeque, push_back){
         ASSERT_EQ(*it++, *b++);
     ASSERT_EQ(x[19], 5);
 }
+
+
+TYPED_TEST(TestDeque, erase_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(5,0);
+    x[0] = 0;
+    x[1] = 1;
+    x[2] = 2;
+    x[3] = 3;
+    x[4] = 4;
+
+    
+    auto it = x.begin();
+        ++it;
+    it = x.erase(it);
+
+
+
+    ASSERT_EQ(2, x.at(1));
+    ASSERT_EQ(4, x.size() );
+
+    it = x.begin();
+
+    ++it;
+
+    it = x.erase(it);
+
+    ASSERT_EQ(3, x.at(1));
+    ASSERT_EQ(3, x.size() );
+
+
+
+}
+
+

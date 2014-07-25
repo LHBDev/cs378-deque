@@ -754,10 +754,43 @@ class my_deque {
         /**
          * <your documentation>
          */
-        iterator erase (iterator) {
-            // <your code>
+        iterator erase (iterator given_pos) {
+            
+           auto b = begin(); 
+           auto e = end();
+           size_type size = distance(b,e) - 1;
+           size_type index_pos = distance(b , given_pos) ;
+
+
+            cout << "This is size: " << size << endl;
+            cout << "This is index_pos: " << index_pos <<endl;        
+
+
+           my_deque x(size,0);
+           size_type i = 0;
+           for (auto pos = x.begin(), end = x.end(); pos!=end;) {
+                if(i == index_pos){
+                    ++b;
+                }
+                else{
+
+                    *pos = *b;
+                    ++b;
+
+                    ++pos;
+
+
+                }  
+                ++i;
+
+            }
+
+
+            swap(x);
+
+
             assert(valid());
-            return iterator();}
+            return iterator(&x, index_pos);}
 
         // -----
         // front
@@ -800,17 +833,11 @@ class my_deque {
            for (auto pos = x.begin(), end = x.end(); pos!=end; ++pos) {
                 if(i == index_pos){
                     *pos = v;
-
                 }
                 else{
-                    
-
                     *pos = *b;
-
                     ++b;
                 }  
-
-                
                 ++i;    
 
             }
