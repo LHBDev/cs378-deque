@@ -455,3 +455,99 @@ TYPED_TEST(TestDeque, push_back){
     while(it != e)
         ASSERT_EQ(*it++, *b++);
 }
+
+
+TYPED_TEST(TestDeque, front){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(10, 0);
+    x[0] = 0;
+    x[1] = 1;
+    x[9] = 10;
+    ASSERT_EQ(0, x.front());
+
+}
+
+
+TYPED_TEST(TestDeque, back){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(10, 0);
+    x[0] = 0;
+    x[1] = 1;
+    x[9] = 9;
+    ASSERT_EQ(9, x.back());
+
+}
+
+TYPED_TEST(TestDeque, back_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(9, 3);
+    x[8] = 8;
+    ASSERT_EQ(8, x.back());
+}
+
+
+TYPED_TEST(TestDeque, at_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(4545, 3);
+
+
+    x[456] = 999;
+    ASSERT_EQ(999, x.at(456));
+
+}
+
+
+
+TYPED_TEST(TestDeque, insert_1){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(5, 1);
+    
+    auto it = x.begin();
+    ++it;
+    ++it;
+
+    it = x.insert(it, 3);
+
+    x[3] = 55;
+    ASSERT_EQ(3, x.at(2));
+
+    ++it;
+
+    ASSERT_EQ(55, x.at(3));
+
+
+}
+
+TYPED_TEST(TestDeque, insert_2){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(5, 1);
+    
+    auto it = x.begin();
+        ++it;
+    it = x.insert(it, 1);
+    it = x.begin();
+        ++it;
+        ++it;
+    it = x.insert(it, 2);
+    //     ++it;
+    // it = x.insert(it, 3);
+
+    ASSERT_EQ(1, x.at(1));
+    ASSERT_EQ(2, x.at(2));
+    // ASSERT_EQ(3, x.at(3));
+    // ASSERT_EQ(55, x.at(3));
+
+
+}

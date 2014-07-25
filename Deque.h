@@ -653,10 +653,13 @@ class my_deque {
          * <your documentation>
          */
         reference at (size_type index) {
-            // <your code>
-            // dummy is just to be able to compile the skeleton, remove it
-            static value_type dummy;
-            return dummy;}
+            size_type i =0;
+            auto _at = begin();
+            while(i != index){
+                ++_at;
+                ++i;
+            }
+            return *_at;}
 
         /**
          * <your documentation>
@@ -672,10 +675,9 @@ class my_deque {
          * <your documentation>
          */
         reference back () {
-            // <your code>
-            // dummy is just to be able to compile the skeleton, remove it
-            static value_type dummy;
-            return dummy;}
+            auto b = end();
+            --b;
+            return *b;}
 
         /**
          * <your documentation>
@@ -761,10 +763,8 @@ class my_deque {
          * <your documentation>
          */
         reference front () {
-            // <your code>
-            // dummy is just to be able to compile the skeleton, remove it
-            static value_type dummy;
-            return dummy;}
+            auto b = begin();
+            return *b;}
 
         /**
          * <your documentation>
@@ -779,10 +779,48 @@ class my_deque {
         /**
          * <your documentation>
          */
-        iterator insert (iterator, const_reference) {
-            // <your code>
+        iterator insert (iterator given_pos, const_reference v) {
+           
+           auto b = begin(); 
+           auto e = end();
+           size_type size = distance(b,e);
+           size_type index_pos = distance(b , given_pos) ;
+
+
+            // cout << "This is size: " << size << endl;
+            // cout << "This is index_pos: " << index_pos <<endl;        
+
+
+           my_deque x(size,0);
+           size_type i = 0;
+           for (auto pos = x.begin(), end = x.end(); pos!=end; ++pos) {
+                if(i == index_pos){
+                    *pos = v;
+
+                }
+                else{
+                    
+
+                    *pos = *b;
+
+                    ++b;
+                }  
+
+                
+                ++i;    
+
+            }
+
+
+            swap(x);
+
+            //NEED TO MAKE SURE WE DESTRUCT OLD CONTAINER
+
+
+
+
             assert(valid());
-            return iterator();}
+            return iterator(&x, index_pos);}
 
         // ---
         // pop
