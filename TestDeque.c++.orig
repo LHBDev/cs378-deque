@@ -537,6 +537,10 @@ TYPED_TEST(TestDeque, push_back){
     ASSERT_EQ(x[19], 5);
 }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> c2ebdda53c69a549bf81f39058a5c9ad9353cbfc
 TYPED_TEST(TestDeque, resize){
     typedef typename TestFixture::deque_type      deque_type;
     typedef typename TestFixture::size_type       size_type;
@@ -597,6 +601,7 @@ TYPED_TEST(TestDeque, copy_assignment){
 
     while(it != e)
         ASSERT_EQ(*it++, *b++);    
+<<<<<<< HEAD
 }
 
 TYPED_TEST(TestDeque, erase_1){
@@ -631,4 +636,6 @@ TYPED_TEST(TestDeque, erase_1){
 
 
 
+=======
+>>>>>>> c2ebdda53c69a549bf81f39058a5c9ad9353cbfc
 }

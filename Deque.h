@@ -508,7 +508,6 @@ class my_deque {
                  * <your documentation>
                  */
                 const_iterator& operator += (difference_type d) {
-            // cout << "YOU CALLED THE CONSTANT ONE!!!  YEAH!!!"<< endl;
 
                     index += d;
                     assert(valid());
@@ -548,17 +547,13 @@ class my_deque {
         :_a(a), _pa(){
 
             size_type num_arrays = s / WIDTH + (s % WIDTH? 1 : 0);
-            // allocate outer array and save pointer to front
             _fr = _pa.allocate(num_arrays);
-            // allocate inner arrays
             for (size_type i = 0; i < num_arrays; ++i) {
                 _fr[i] = _a.allocate(WIDTH);
             }
 
             _ba = _fr + num_arrays;
-            // set pointer to beginning of data
             _b = _fr[0];
-            // offset < WIDTH if we have a partial array
             size_type offset = WIDTH - (WIDTH * num_arrays - s); 
             _e = _fr[num_arrays - 1] + offset;            
             _front = _begin = _a.allocate(num_arrays * WIDTH);
@@ -733,15 +728,12 @@ class my_deque {
          * <your documentation>
          */
         iterator end () {
-            // <your code>
             return iterator(this, size());}
 
         /**
          * <your documentation>
          */
         const_iterator end () const {
-         // cout << "YOU CALLED THE CONSTANT END !!!  YEAH!!!"<< endl;
-
          return const_iterator(this, size() );}
 
         // -----
@@ -810,36 +802,22 @@ class my_deque {
            size_type size = distance(b,e);
            size_type index_pos = distance(b , given_pos) ;
 
-
-            // cout << "This is size: " << size << endl;
-            // cout << "This is index_pos: " << index_pos <<endl;        
-
-
            my_deque x(size,0);
            size_type i = 0;
            for (auto pos = x.begin(), end = x.end(); pos!=end; ++pos) {
                 if(i == index_pos){
                     *pos = v;
-
                 }
                 else{
-                    
-
                     *pos = *b;
-
                     ++b;
                 }                  
                 ++i;    
-
             }
 
 
+           
             swap(x);
-
-            //NEED TO MAKE SURE WE DESTRUCT OLD CONTAINER
-
-
-
 
             assert(valid());
             return iterator(&x, index_pos);}
