@@ -155,8 +155,6 @@ TYPED_TEST(TestDeque, push_back2){
 
     deque_type x(10, 2);
     x.push_back(3);
-    auto it = x.begin();
-    auto e = x.end();
     ASSERT_EQ(x.back(), 3);    
 }
 
@@ -540,6 +538,68 @@ TYPED_TEST(TestDeque, push_back){
 }
 
 
+TYPED_TEST(TestDeque, resize){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(15, 0);
+    size_type s1 = x.size();
+    x.resize(20, 1);
+    size_type s2 = x.size();
+    x[17] = 5;
+    ASSERT_EQ(15, s1);
+    ASSERT_EQ(20, s2);
+    ASSERT_EQ(5, x[17]);
+}
+
+TYPED_TEST(TestDeque, pop_front){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x;
+    for(int i = 0; i < 10; ++i)
+        x.push_back(i);
+    ASSERT_EQ(10, x.size());
+    x.pop_front();
+    ASSERT_EQ(9, x.size());
+}
+
+TYPED_TEST(TestDeque, pop_back){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x;
+    for(int i = 0; i < 10; ++i)
+        x.push_back(i);
+    ASSERT_EQ(10, x.size());
+    x.pop_back();
+    ASSERT_EQ(9, x.size());    
+}
+
+TYPED_TEST(TestDeque, push_front){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(8, 0);
+    x.push_front(1);
+    ASSERT_EQ(1, x[0]);    
+}
+
+TYPED_TEST(TestDeque, copy_assignment){
+    typedef typename TestFixture::deque_type      deque_type;
+    typedef typename TestFixture::size_type       size_type;
+
+    deque_type x(10, 1);
+    deque_type y = x;
+
+    typename deque_type::iterator it = x.begin();
+    typename deque_type::iterator e  = x.end();
+    typename deque_type::iterator b  = y.begin();
+
+    while(it != e)
+        ASSERT_EQ(*it++, *b++);    
+}
+
 TYPED_TEST(TestDeque, erase_1){
     typedef typename TestFixture::deque_type      deque_type;
     typedef typename TestFixture::size_type       size_type;
@@ -573,5 +633,3 @@ TYPED_TEST(TestDeque, erase_1){
 
 
 }
-
-
