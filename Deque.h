@@ -6,7 +6,7 @@
 //-----------------------
 // Deque.h
 // Ruben Baeza rb27735
-// Norman Lopez nel349
+// Norman Lopez nel349 
 //-----------------------
 
 #ifndef Deque_h
