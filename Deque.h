@@ -3,6 +3,11 @@
 // Copyright (C) 2014
 // Glenn P. Downing
 // ----------------------
+//-----------------------
+// Deque.h
+// Ruben Baeza rb27735
+// Norman Lopez nel349
+//-----------------------
 
 #ifndef Deque_h
 #define Deque_h
